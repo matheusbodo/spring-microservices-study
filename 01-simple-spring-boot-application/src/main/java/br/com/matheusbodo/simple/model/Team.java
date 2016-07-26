@@ -1,8 +1,13 @@
 package br.com.matheusbodo.simple.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Team {
@@ -14,6 +19,18 @@ public class Team {
 	private String name;
 	
 	private String location;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="teamId")
+	private Set<Player> players;
+	
+	public Team() { }
+	
+	public Team(String location, String name, Set<Player> players) {
+		setLocation(location);
+		setName(name);
+		setPlayers(players);
+	}
 	
 	public Long getId() {
 		return id;
@@ -39,4 +56,11 @@ public class Team {
 		this.location = location;
 	}
 
+	public Set<Player> getPlayers() {
+		return players;
+	}
+	
+	public void setPlayers(Set<Player> players) {
+		this.players = players;
+	}
 }
